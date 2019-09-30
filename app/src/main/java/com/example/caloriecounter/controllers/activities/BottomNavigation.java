@@ -1,13 +1,20 @@
-package com.example.caloriecounter;
+package com.example.caloriecounter.controllers.activities;
 
 import android.os.Bundle;
 
+import com.example.caloriecounter.R;
+import com.example.caloriecounter.TagsFragment;
+import com.example.caloriecounter.controllers.fragments.Calculate;
+import com.example.caloriecounter.controllers.fragments.Food;
+import com.example.caloriecounter.controllers.fragments.PersonStatistics;
+import com.example.caloriecounter.controllers.fragments.UserProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -25,15 +32,26 @@ public class BottomNavigation extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
 //                    fragmentManager.findFragmentByTag(TagsFragment.Calculate.name());
 //                    mTextMessage.setText(R.string.title_home);
+                    fragment = new Calculate();
+                    replaceFragment(fragment);
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_products:
 //                    mTextMessage.setText(R.string.title_dashboard);
+                    fragment = new Food();
+                    replaceFragment(fragment);
                     return true;
-                case R.id.navigation_notifications:
+                case  R.id.navigation_graphs:
+                    fragment = new PersonStatistics();
+                    replaceFragment(fragment);
+                    return true;
+                case R.id.navigation_user:
+                    fragment = new UserProfile();
+                    replaceFragment(fragment);
 //                    mTextMessage.setText(R.string.title_notifications);
                     return true;
             }
@@ -71,22 +89,22 @@ public class BottomNavigation extends AppCompatActivity {
 //        }
 //    }
 
-    Fragment changeLayout(TagsFragment tag) {
-        List<TagsFragment> tags = Arrays.asList(TagsFragment.Calculate, TagsFragment.Food, TagsFragment.PersonStatistics);
-        tags.remove(tag);
-
-//        for (TagsFragment item:
-//             tags) {
-        int index = fragmentManager.getBackStackEntryCount() - 1;
-        FragmentManager.BackStackEntry backEntry = fragmentManager.getBackStackEntryAt(index);
-        String tagName = backEntry.getName();
-        Fragment fragment = fragmentManager.findFragmentByTag(tagName);
-        if (fragment == null) {
-        }
-        return fragment;
-//        fragmentTransaction.addToBackStack(tag);
+//    Fragment changeLayout(TagsFragment tag) {
+//        List<TagsFragment> tags = Arrays.asList(TagsFragment.Calculate, TagsFragment.Food, TagsFragment.PersonStatistics);
+//        tags.remove(tag);
+//
+////        for (TagsFragment item:
+////             tags) {
+//        int index = fragmentManager.getBackStackEntryCount() - 1;
+//        FragmentManager.BackStackEntry backEntry = fragmentManager.getBackStackEntryAt(index);
+//        String tagName = backEntry.getName();
+//        Fragment fragment = fragmentManager.findFragmentByTag(tagName);
+//        if (fragment == null) {
 //        }
-    }
+//        return fragment;
+////        fragmentTransaction.addToBackStack(tag);
+////        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +116,24 @@ public class BottomNavigation extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
+
+    private void replaceFragment (Fragment fragment){
+        String backStateName = fragment.getClass().getName();
+
+        FragmentManager manager = getSupportFragmentManager();
+//        boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
+        boolean fragmentPopped = manager.findFragmentByTag ( backStateName ) == null ? false : true;
+        if (!fragmentPopped){ //fragment not in back stack, create it.
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.replace(R.id.frame_content, fragment);
+            ft.addToBackStack(backStateName);
+            ft.commit();
+        }else{
+            FragmentTransaction ft = manager.beginTransaction();
+            boolean check = manager.findFragmentByTag ( backStateName ) == null ? false : true;
+            ft.show(manager.findFragmentByTag(backStateName)).commit();
+        }
     }
 
 }

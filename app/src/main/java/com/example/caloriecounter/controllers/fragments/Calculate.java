@@ -14,10 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.caloriecounter.R;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
-import org.w3c.dom.Text;
 
 public class Calculate extends Fragment {
     private TextView result;
@@ -34,7 +31,7 @@ public class Calculate extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.calculate_calorie_fragment,container,false);
+        View view = inflater.inflate(R.layout.fragment_calculate_calorie,container,false);
 
         Button countCalorie = (Button)view.findViewById(R.id.count);
         countCalorie.setOnClickListener(new View.OnClickListener() {
