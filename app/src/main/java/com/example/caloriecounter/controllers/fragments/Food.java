@@ -1,5 +1,6 @@
 package com.example.caloriecounter.controllers.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caloriecounter.R;
+import com.example.caloriecounter.controllers.activities.DescriptionProduct;
 
 public class Food extends Fragment {
 
@@ -31,8 +34,8 @@ public class Food extends Fragment {
         RecyclerView listView = (RecyclerView)view.findViewById(R.id.products_list);
 
         listView.setAdapter(new ProductsAdapter());
-        listView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        return super.onCreateView(inflater, container, savedInstanceState);
+        listView.setLayoutManager(new LinearLayoutManager(getContext()));
+        return view;
     }
 
     class ProductsAdapter extends RecyclerView.Adapter<ProductsHolder>{
@@ -45,12 +48,12 @@ public class Food extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ProductsHolder holder, int position) {
-
+            holder.onBind(position);
         }
 
         @Override
         public int getItemCount() {
-            return 11;
+            return 21;
         }
     }
 
@@ -58,6 +61,17 @@ public class Food extends Fragment {
 
         public ProductsHolder(@NonNull View itemView) {
             super(itemView);
+        }
+
+        public void onBind(final int index){
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), DescriptionProduct.class);
+                    intent.putExtra("index", index);
+                    startActivity(intent);
+                }
+            });
         }
 
 

@@ -4,7 +4,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="btn_count">Считать</string>
+    <string name="btn_count">Вычислить</string>
     <string name="cafe">cafe</string>
     <string name="user">user</string>
     <string name="graphs">график</string>

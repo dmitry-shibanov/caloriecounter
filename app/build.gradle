@@ -37,7 +37,13 @@ repositories {
 }
 
 dependencies {
+
+    def nav_version = "2.1.0"
+
+
     implementation 'org.greenrobot:greendao:3.2.2'
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'javax.inject:javax.inject:1'
     implementation fileTree(dir: 'libs', include: ['*.jar'])

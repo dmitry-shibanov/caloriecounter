@@ -24,7 +24,7 @@ import java.util.Random;
 public class SplashScreen extends AppCompatActivity {
 
     private String[] phrase;
-
+//https://stackoverflow.com/questions/50485988/is-there-a-way-to-keep-fragment-alive-when-using-bottomnavigationview-with-new-n
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

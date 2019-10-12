@@ -10,26 +10,39 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/count_edit"
+        android:id="@+id/edit_weight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         app:hintTextAppearance="@style/MyAppearance">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Введите что-то"/>
+            android:inputType="numberDecimal"
+            android:hint="Введите вес"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/result_count"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_height"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_margin="16dp"
+        app:hintTextAppearance="@style/MyAppearance">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Введите рост"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/count"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/circle_engles_buttons"
+        android:layout_marginVertical="16dp"
+        android:paddingHorizontal="16dp"
         android:text="@string/btn_count"/>
 
 

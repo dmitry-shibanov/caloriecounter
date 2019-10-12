@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashScreen">
+
+    <activity
+        android:id="@+id/splashScreen"
+        android:name="com.example.caloriecounter.controllers.activities.SplashScreen"
+        android:label="activity_splash_screen"
+        tools:layout="@layout/activity_splash_screen" />
+    <activity
+        android:id="@+id/bottomNavigation"
+        android:name="com.example.caloriecounter.controllers.activities.BottomNavigation"
+        android:label="activity_bottom_navigation"
+        tools:layout="@layout/activity_bottom_navigation" />
+    <fragment
+        android:id="@+id/food"
+        android:name="com.example.caloriecounter.controllers.fragments.Food"
+        android:label="fragment_products"
+        tools:layout="@layout/fragment_products" />
+</navigation>
