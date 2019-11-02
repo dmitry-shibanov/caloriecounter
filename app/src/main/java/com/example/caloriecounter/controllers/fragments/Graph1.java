@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.caloriecounter.R;
 import com.github.mikephil.charting.animation.Easing;
@@ -27,6 +28,9 @@ import java.util.List;
 public class Graph1 extends Fragment {
 
     private PieChart pieChart;
+    private TextView mBeginDate;
+    private TextView mEndDate;
+
     public Graph1() {
         // Required empty public constructor
     }
@@ -35,13 +39,19 @@ public class Graph1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_graph1,container,false);
-        pieChart = (PieChart)view.findViewById(R.id.piechart);
+        View view = inflater.inflate(R.layout.fragment_graph1, container, false);
+
+        mBeginDate = (TextView) view.findViewById(R.id.begin_date);
+
+        mEndDate = (TextView)view.findViewById(R.id.end_date);
+
+        pieChart = (PieChart) view.findViewById(R.id.piechart);
 
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5,10,5,5);
+        pieChart.setExtraOffsets(5, 10, 5, 5);
 
         pieChart.setDragDecelerationFrictionCoef(0.15f);
 
@@ -51,13 +61,13 @@ public class Graph1 extends Fragment {
 
 
         List<PieEntry> yValues = new ArrayList<>();
-        yValues.add(new PieEntry(34f,"Пицца"));
-        yValues.add(new PieEntry(21f,"Сок"));
-        yValues.add(new PieEntry(54f,"Лемонад"));
-        yValues.add(new PieEntry(14f,"Мясо"));
-        yValues.add(new PieEntry(12f,"KFC"));
+        yValues.add(new PieEntry(34f, "Пицца"));
+        yValues.add(new PieEntry(21f, "Сок"));
+        yValues.add(new PieEntry(54f, "Лемонад"));
+        yValues.add(new PieEntry(14f, "Мясо"));
+        yValues.add(new PieEntry(12f, "KFC"));
 
-        PieDataSet dataSet = new PieDataSet(yValues,"Food");
+        PieDataSet dataSet = new PieDataSet(yValues, "Food");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
         dataSet.setColors(ColorTemplate.JOYFUL_COLORS);

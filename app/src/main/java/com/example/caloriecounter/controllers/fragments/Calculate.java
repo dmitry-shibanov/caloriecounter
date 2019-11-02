@@ -1,5 +1,8 @@
 package com.example.caloriecounter.controllers.fragments;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,10 +25,30 @@ import java.math.BigDecimal;
 
 public class Calculate extends Fragment {
     private TextView result;
+    private static final String CHANNEL_ID = "dasjdlasl";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            CharSequence name = getString(R.string.channel_name);
+            CharSequence name = "Any title";
+
+//            String description = getString(R.string.channel_description);
+            String description = "Any no long description";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     int countCalories(int calorie){
@@ -63,6 +86,23 @@ public class Calculate extends Fragment {
         countCalorie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                createNotificationChannel();
+
+//                Intent snoozeIntent = new Intent(this, MyBroadcastReceiver.class);
+//                snoozeIntent.setAction(ACTION_SNOOZE);
+//                snoozeIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
+//                PendingIntent snoozePendingIntent =
+//                        PendingIntent.getBroadcast(this, 0, snoozeIntent, 0);
+//
+//                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+//                        .setSmallIcon(R.drawable.notification_icon)
+//                        .setContentTitle("My notification")
+//                        .setContentText("Hello World!")
+//                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//                        .setContentIntent(pendingIntent)
+//                        .addAction(R.drawable.ic_snooze, getString(R.string.snooze),
+//                                snoozePendingIntent);
+
                 try {
                     BigDecimal weight = new BigDecimal(weightEdit.getEditText().getText().toString());
                     BigDecimal height = new BigDecimal(heightEdit.getEditText().getText().toString());

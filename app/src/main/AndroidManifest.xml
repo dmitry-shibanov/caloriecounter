@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.caloriecounter">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_burn"
@@ -10,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".controllers.activities.DescriptionProduct"
-            android:parentActivityName=".controllers.activities.BottomNavigation"
             android:theme="@style/AppThemeNoActionBar"></activity>
         <activity
             android:name=".controllers.activities.SplashScreen"

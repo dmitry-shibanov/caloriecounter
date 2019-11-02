@@ -1,8 +1,13 @@
 package com.example.caloriecounter.controllers.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -25,12 +30,36 @@ public class SplashScreen extends AppCompatActivity {
 
     private String[] phrase;
 //https://stackoverflow.com/questions/50485988/is-there-a-way-to-keep-fragment-alive-when-using-bottomnavigationview-with-new-n
+
+    private void checkPermissions() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 123);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+            case 123:
+                if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    finish();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        phrase = new String[]{"Спорт","Соки","Правильное питание","Отдых","Бег"};
+        phrase = new String[]{"Спорт", "Соки", "Правильное питание", "Отдых", "Бег"};
 
         final TextView appName = (TextView) findViewById(R.id.splash_app_name);
 
@@ -59,6 +88,7 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 progressBar.setVisibility(View.GONE);
+                checkPermissions();
                 Intent intent = new Intent(SplashScreen.this, BottomNavigation.class);
                 startActivity(intent);
             }
