@@ -1,11 +1,10 @@
 package com.example.caloriecounter.controllers.fragments;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,12 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +41,18 @@ public class Graph1 extends Fragment {
 
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(resultCode != Activity.RESULT_OK){
+            return;
+        }
+        if(requestCode == 0){
+            Date date = (Date)data.getSerializableExtra(DateFragment.EXTRA_DATE);
+            mBeginDate.setText(date.toString());
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -44,6 +60,15 @@ public class Graph1 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_graph1, container, false);
 
         mBeginDate = (TextView) view.findViewById(R.id.begin_date);
+        mBeginDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getFragmentManager();
+                DateFragment fragment = DateFragment.newInstance(new Date());
+                fragment.setTargetFragment(Graph1.this,0);
+                fragment.show(manager,"DialogDate");
+            }
+        });
 
         mEndDate = (TextView)view.findViewById(R.id.end_date);
 

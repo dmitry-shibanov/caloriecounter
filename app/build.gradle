@@ -25,6 +25,10 @@ android {
             java.srcDirs = ['src/main/java', 'build/generated/source/greendao']
         }
     }
+    compileOptions {
+        targetCompatibility = 1.8
+        sourceCompatibility = 1.8
+    }
 }
 
 greendao {

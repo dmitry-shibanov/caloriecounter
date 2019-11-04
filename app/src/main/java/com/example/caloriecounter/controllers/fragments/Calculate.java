@@ -7,14 +7,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.example.caloriecounter.R;
 import com.example.caloriecounter.controllers.fragments.dialogs.DialogError;
@@ -23,9 +21,18 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.math.BigDecimal;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 public class Calculate extends Fragment {
     private TextView result;
     private static final String CHANNEL_ID = "dasjdlasl";
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.clear();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +66,7 @@ public class Calculate extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calculate_calorie,container,false);
-
+        setHasOptionsMenu(true);
 
         final TextInputLayout weightEdit = (TextInputLayout)view.findViewById(R.id.edit_weight);
         weightEdit.getEditText().addTextChangedListener(new TextWatcher() {
