@@ -75,7 +75,8 @@ public class UserProfile extends Fragment {
         }
         if (requestCode == 0) {
             Date date = (Date) data.getSerializableExtra(DateFragment.EXTRA_DATE);
-            mBirthday.setText(date.getDay() + '.' + date.getMonth() + '.' + date.getYear());
+            int year = date.getYear()+1900;
+            mBirthday.setText(String.valueOf(date.getDate()) + "." + date.getMonth() + "." + year);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -84,11 +85,14 @@ public class UserProfile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
+        mBirthday = (TextView)view.findViewById(R.id.textView4);
+        mBirthday.setOnClickListener(view1 -> {
+            FragmentManager manager = getFragmentManager();
+            DateFragment fragment = DateFragment.newInstance(new Date());
+            fragment.setTargetFragment(UserProfile.this, 0);
+            fragment.show(manager, "DialogDate");
+        });
 
-        FragmentManager manager = getFragmentManager();
-        DateFragment fragment = DateFragment.newInstance(new Date());
-        fragment.setTargetFragment(UserProfile.this, 0);
-        fragment.show(manager, "DialogDate");
 
         return view;
     }

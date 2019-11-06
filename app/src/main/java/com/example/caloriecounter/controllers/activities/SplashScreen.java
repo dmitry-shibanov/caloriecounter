@@ -29,7 +29,6 @@ import java.util.Random;
 public class SplashScreen extends AppCompatActivity {
 
     private String[] phrase;
-//https://stackoverflow.com/questions/50485988/is-there-a-way-to-keep-fragment-alive-when-using-bottomnavigationview-with-new-n
 
     private void checkPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -84,14 +83,11 @@ public class SplashScreen extends AppCompatActivity {
 
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.splash_progress_bar);
         progressBar.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.GONE);
-                checkPermissions();
-                Intent intent = new Intent(SplashScreen.this, BottomNavigation.class);
-                startActivity(intent);
-            }
+        new Handler().postDelayed(() -> {
+            progressBar.setVisibility(View.GONE);
+            checkPermissions();
+            Intent intent = new Intent(SplashScreen.this, BottomNavigation.class);
+            startActivity(intent);
         }, 6000);
     }
 }
