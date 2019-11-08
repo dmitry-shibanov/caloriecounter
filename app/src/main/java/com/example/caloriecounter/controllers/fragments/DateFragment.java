@@ -64,17 +64,14 @@ public class DateFragment extends DialogFragment {
         mDatePicker = (DatePicker)v.findViewById(R.id.dialog_date_picker);
         mDatePicker.init(year,month,day,null);
 
-        return new AlertDialog.Builder(getActivity()).setView(v).setTitle("Выберите дату").setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                int year = mDatePicker.getYear();
-                int month = mDatePicker.getMonth();
-                int day = mDatePicker.getDayOfMonth();
+        return new AlertDialog.Builder(getActivity()).setView(v).setTitle("Выберите дату").setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+            int year1 = mDatePicker.getYear();
+            int month1 = mDatePicker.getMonth();
+            int day1 = mDatePicker.getDayOfMonth();
 
-                Date date = new GregorianCalendar(year,month,day).getTime();
+            Date date1 = new GregorianCalendar(year1, month1, day1).getTime();
 
-                sendResult(Activity.RESULT_OK,date);
-            }
+            sendResult(Activity.RESULT_OK, date1);
         }).create();
     }
 }

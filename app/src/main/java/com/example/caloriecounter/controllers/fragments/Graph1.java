@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.caloriecounter.R;
+import com.example.caloriecounter.controllers.fragments.dialogs.DialogError;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -26,29 +27,60 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class Graph1 extends Fragment {
 
     private PieChart pieChart;
     private TextView mBeginDate;
     private TextView mEndDate;
+    private Date dateFirst;
+    private Date dateSecond;
 
     public Graph1() {
-        // Required empty public constructor
+
+    }
+
+    private void checkCondionDates(){
+        long result = dateSecond.getTime() - dateFirst.getTime();
+        if(result<=0){
+            DialogError di = DialogError.newInstance("Проверьте даты", "Дата начала периода больше даты конца");
+            di.show(getFragmentManager(),"DialogError");
+        }else{
+            checkDb();
+        }
+    }
+
+    private void checkDb(){
+
+    }
+
+    private String localDate(Date date) {
+
+        int year = date.getYear() + 1900;
+        int month = date.getMonth();
+        int day = date.getDate();
+
+        return day + "." + month + "." + year;
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode != Activity.RESULT_OK){
+        if (resultCode != Activity.RESULT_OK) {
             return;
         }
-        if(requestCode == 0){
-            Date date = (Date)data.getSerializableExtra(DateFragment.EXTRA_DATE);
-            mBeginDate.setText(date.toString());
+        if (requestCode == 0) {
+            dateFirst = (Date) data.getSerializableExtra(DateFragment.EXTRA_DATE);
+            mBeginDate.setText(localDate(dateFirst));
         }
+        if (requestCode == 1) {
+            dateSecond = (Date) data.getSerializableExtra(DateFragment.EXTRA_DATE);
+            mBeginDate.setText(localDate(dateSecond));
+        }
+
+        if(dateFirst!=null && dateSecond!=null){
+            checkCondionDates();
+        }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -56,7 +88,6 @@ public class Graph1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_graph1, container, false);
 
         mBeginDate = (TextView) view.findViewById(R.id.begin_date);
@@ -65,12 +96,21 @@ public class Graph1 extends Fragment {
             public void onClick(View view) {
                 FragmentManager manager = getFragmentManager();
                 DateFragment fragment = DateFragment.newInstance(new Date());
-                fragment.setTargetFragment(Graph1.this,0);
-                fragment.show(manager,"DialogDate");
+                fragment.setTargetFragment(Graph1.this, 0);
+                fragment.show(manager, "DialogDate");
             }
         });
 
-        mEndDate = (TextView)view.findViewById(R.id.end_date);
+        mEndDate = (TextView) view.findViewById(R.id.end_date);
+        mEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getFragmentManager();
+                DateFragment fragment = DateFragment.newInstance(new Date());
+                fragment.setTargetFragment(Graph1.this, 1);
+                fragment.show(manager, "DialogDate");
+            }
+        });
 
         pieChart = (PieChart) view.findViewById(R.id.piechart);
 

@@ -30,11 +30,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class Food extends Fragment {
 
-    List<String> real_products = Arrays.asList("Яблоки","Ягоды","Говядина","Бургеры","Шашлык","Пицца","Рыба","Вино");
-    List<String> products = real_products.subList(0,real_products.size());
+    List<String> real_products = Arrays.asList("Яблоки", "Ягоды", "Говядина", "Бургеры", "Шашлык", "Пицца", "Рыба", "Вино");
+    List<String> products = real_products.subList(0, real_products.size());
+
     private Drawable loadDrawable(int index) {
         try {
-            InputStream ims = getActivity().getAssets().open((index+1)+".jpg");
+            InputStream ims = getActivity().getAssets().open("food/" + (index + 1) + ".jpg");
             Drawable d = Drawable.createFromStream(ims, null);
             return d;
         } catch (IOException ex) {
@@ -57,18 +58,18 @@ public class Food extends Fragment {
         listView.setAdapter(prodcutAdapter);
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        ((BottomNavigation)getActivity()).setItemListener(query -> {
+        ((BottomNavigation) getActivity()).setItemListener(query -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                products = real_products.stream().peek(String::toLowerCase).filter((String item)->item.contains(query.toLowerCase())).collect(Collectors.toList());
-                products.forEach(item->Log.i("Products-List",item));
+                products = real_products.stream().peek(String::toLowerCase).filter((String item) -> item.contains(query.toLowerCase())).collect(Collectors.toList());
+                products.forEach(item -> Log.i("Products-List", item));
                 prodcutAdapter.notifyDataSetChanged();
-            }else{
+            } else {
                 List<String> timedProducts = new ArrayList<>();
-                for (String item:
+                for (String item :
                         real_products) {
-                    if(item.toLowerCase().contains(query.toLowerCase())){
+                    if (item.toLowerCase().contains(query.toLowerCase())) {
                         timedProducts.add(item);
-                        Log.i("Products-List",item);
+                        Log.i("Products-List", item);
                     }
                 }
 
@@ -77,8 +78,8 @@ public class Food extends Fragment {
             }
         });
 
-        ((BottomNavigation)getActivity()).ClearSearchView(receipts -> {
-            products = real_products.subList(0,real_products.size());
+        ((BottomNavigation) getActivity()).ClearSearchView(receipts -> {
+            products = real_products.subList(0, real_products.size());
         });
 
         return view;
