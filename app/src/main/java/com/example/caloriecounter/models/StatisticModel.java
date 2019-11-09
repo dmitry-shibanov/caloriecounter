@@ -29,6 +29,7 @@ public class StatisticModel {
     @Generated(hash = 1471655908)
     private transient StatisticModelDao myDao;
 
+
     @Generated(hash = 1191353506)
     public StatisticModel(long id, String weight) {
         this.id = id;
@@ -38,6 +39,7 @@ public class StatisticModel {
     @Generated(hash = 797960826)
     public StatisticModel() {
     }
+
 
     public long getId() {
         return this.id;
@@ -97,4 +99,5 @@ public class StatisticModel {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getStatisticModelDao() : null;
     }
+
 }

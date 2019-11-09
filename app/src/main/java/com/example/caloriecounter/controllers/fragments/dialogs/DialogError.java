@@ -25,7 +25,7 @@ import java.util.Date;
 public class DialogError extends DialogFragment {
 
     private static final String MESSAGE = "message";
-    private static final String ERROR = "message";
+    private static final String ERROR = "error";
 
     private TextView mErrorContent;
     private TextView mErrorTitle;
@@ -33,7 +33,7 @@ public class DialogError extends DialogFragment {
     private String content;
     private String title;
 
-    public static DialogError newInstance(String message, String error){
+    public static DialogError newInstance(String message, String error) {
         Bundle args = new Bundle();
         args.putString(MESSAGE, message);
         args.putString(ERROR, error);
@@ -48,13 +48,11 @@ public class DialogError extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dialog_exceptions, null, false);
 
-        mErrorContent = (TextView)view.findViewById(R.id.error_description);
-        mErrorTitle = (TextView)view.findViewById(R.id.title_error);
+        mErrorContent = (TextView) view.findViewById(R.id.error_description);
+        mErrorTitle = (TextView) view.findViewById(R.id.title_error);
 
-        if(savedInstanceState!=null){
-            content = savedInstanceState.getString(MESSAGE);
-            title = savedInstanceState.getString(ERROR);
-        }
+        content = getArguments().getString(MESSAGE);
+        title = getArguments().getString(ERROR);
 
         mErrorContent.setText(content);
         mErrorTitle.setText(title);

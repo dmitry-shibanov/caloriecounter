@@ -1,9 +1,11 @@
 package com.example.caloriecounter.data;
 
 import android.content.Context;
-
+// https://stackoverflow.com/questions/9630288/how-to-create-database-from-assets-in-android-using-greendao-orm-library
 //import com.example.caloriecounter.models.DaoMaster;
 //import org.greenrobot.greendao.database.Database;
+//
+//import javax.inject.Inject;
 //
 //public class DbOpenHelper extends DaoMaster.OpenHelper {
 //    @Inject

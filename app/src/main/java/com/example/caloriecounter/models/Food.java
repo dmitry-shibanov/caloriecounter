@@ -1,9 +1,12 @@
 package com.example.caloriecounter.models;
 
 
+import androidx.annotation.Nullable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
+import org.greenrobot.greendao.annotation.Property;
 
 @Entity(active = true, nameInDb = "Food")
 public class Food {
@@ -12,22 +15,30 @@ public class Food {
     private String title;
     private String content;
     private String calories;
+
+    @Property(nameInDb = "id_food_user")
+    @Nullable
+    private Long id_food_user;
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
     /** Used for active entity operations. */
     @Generated(hash = 1296197325)
     private transient FoodDao myDao;
-    @Generated(hash = 1578193615)
-    public Food(long id, String title, String content, String calories) {
+
+    @Generated(hash = 504340335)
+    public Food(long id, String title, String content, String calories,
+            Long id_food_user) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.calories = calories;
+        this.id_food_user = id_food_user;
     }
     @Generated(hash = 866324199)
     public Food() {
     }
+
     public long getId() {
         return this.id;
     }
@@ -51,6 +62,12 @@ public class Food {
     }
     public void setCalories(String calories) {
         this.calories = calories;
+    }
+    public Long getId_food_user() {
+        return this.id_food_user;
+    }
+    public void setId_food_user(Long id_food_user) {
+        this.id_food_user = id_food_user;
     }
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.

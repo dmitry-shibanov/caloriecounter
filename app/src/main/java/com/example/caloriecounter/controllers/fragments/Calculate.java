@@ -89,6 +89,9 @@ public class Calculate extends Fragment {
                 }catch (ArithmeticException exp){
                     DialogError di = DialogError.newInstance("Проверьте правильность введенных данных, значения меньше или равна 0 недопустимы","Проверьте данные");
                     di.show(getFragmentManager(),"DialogError");
+                }catch(NumberFormatException exp){
+                    DialogError di = DialogError.newInstance("Проверьте правильность введенных данных, везде ли введены числа","Проверьте данные");
+                    di.show(getFragmentManager(),"DialogError");
                 }
             }
         });
