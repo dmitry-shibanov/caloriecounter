@@ -1,8 +1,6 @@
 package com.example.caloriecounter.controllers.fragments;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.os.Build;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.caloriecounter.R;
@@ -19,6 +18,8 @@ import com.example.caloriecounter.controllers.fragments.dialogs.DialogError;
 import com.example.caloriecounter.controllers.fragments.dialogs.DialogResult;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,16 @@ import androidx.fragment.app.Fragment;
 public class Calculate extends Fragment {
     private TextView result;
     private static final String CHANNEL_ID = "dasjdlasl";
+
+    private Drawable loadDrawable() {
+        try {
+            InputStream ims = getActivity().getAssets().open( "balance.png");
+            Drawable d = Drawable.createFromStream(ims, null);
+            return d;
+        } catch (IOException ex) {
+            return null;
+        }
+    }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -45,6 +56,9 @@ public class Calculate extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calculate_calorie,container,false);
         setHasOptionsMenu(true);
+
+        final ImageView mIcon = (ImageView)view.findViewById(R.id.balance);
+        mIcon.setImageDrawable(loadDrawable());
 
         final TextInputLayout weightEdit = (TextInputLayout)view.findViewById(R.id.edit_weight);
         weightEdit.getEditText().addTextChangedListener(new TextWatcher() {

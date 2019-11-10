@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,15 +21,10 @@ import android.widget.TextView;
 
 import com.example.caloriecounter.R;
 import com.example.caloriecounter.controllers.fragments.dialogs.BottomSheetFragment;
+import com.example.caloriecounter.controllers.fragments.dialogs.BottomSheetMenuFragment;
 import com.example.caloriecounter.controllers.fragments.dialogs.DialogError;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,6 +33,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 
 public class UserProfile extends Fragment {
@@ -68,15 +67,6 @@ public class UserProfile extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         menu.clear();
-    }
-
-    public static UserProfile newInstance(String param1, String param2) {
-        UserProfile fragment = new UserProfile();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -142,15 +132,18 @@ public class UserProfile extends Fragment {
             mBirthday.setText(String.valueOf(date.getDate()) + "." + date.getMonth() + "." + year);
         }
         if (requestCode == 1) {
-            Uri image = Uri.parse(data.getStringExtra(BottomSheetFragment.ICON_IMAGE));
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), image);
-                mIcon.setImageURI(image);
-            } catch (IOException exp) {
-                DialogError di = DialogError.newInstance("Проверьте точно ли вы выбрали изображение", "Проверьте галлерею или камеру");
-                di.show(getFragmentManager(), "DialogError");
-            }
+//            Uri image = Uri.parse(data.getStringExtra(BottomSheetFragment.ICON_IMAGE));
+//            try {
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), image);
+                Bitmap bitmap = (Bitmap) data.getParcelableExtra(BottomSheetFragment.ICON_IMAGE);
+//                mIcon.setImageURI(image);
+                mIcon.setImageBitmap(bitmap);
+//            } catch (IOException exp) {
+//                DialogError di = DialogError.newInstance("Проверьте точно ли вы выбрали изображение", "Проверьте галлерею или камеру");
+//                di.show(getFragmentManager(), "DialogError");
+//            }
         }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -175,6 +168,15 @@ public class UserProfile extends Fragment {
             DateFragment fragment = DateFragment.newInstance(new Date());
             fragment.setTargetFragment(UserProfile.this, 0);
             fragment.show(manager, "DialogDate");
+        });
+
+        final Button mMenu = (Button)view.findViewById(R.id.button2);
+        mMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomSheetMenuFragment menuFragment = new BottomSheetMenuFragment();
+                menuFragment.show(getActivity().getSupportFragmentManager(),menuFragment.getTag());
+            }
         });
 
 

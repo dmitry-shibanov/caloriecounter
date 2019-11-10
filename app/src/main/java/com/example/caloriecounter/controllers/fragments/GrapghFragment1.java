@@ -27,7 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-public class Graph1 extends Fragment {
+public class GrapghFragment1 extends Fragment {
 
     private PieChart pieChart;
     private TextView mBeginDate;
@@ -35,7 +35,7 @@ public class Graph1 extends Fragment {
     private Date dateFirst;
     private Date dateSecond;
 
-    public Graph1() {
+    public GrapghFragment1() {
 
     }
 
@@ -70,11 +70,12 @@ public class Graph1 extends Fragment {
         }
         if (requestCode == 0) {
             dateFirst = (Date) data.getSerializableExtra(DateFragment.EXTRA_DATE);
+            long sdaioa = dateFirst.getTime();
             mBeginDate.setText(localDate(dateFirst));
         }
         if (requestCode == 1) {
             dateSecond = (Date) data.getSerializableExtra(DateFragment.EXTRA_DATE);
-            mBeginDate.setText(localDate(dateSecond));
+            mEndDate.setText(localDate(dateSecond));
         }
 
         if(dateFirst!=null && dateSecond!=null){
@@ -96,7 +97,7 @@ public class Graph1 extends Fragment {
             public void onClick(View view) {
                 FragmentManager manager = getFragmentManager();
                 DateFragment fragment = DateFragment.newInstance(new Date());
-                fragment.setTargetFragment(Graph1.this, 0);
+                fragment.setTargetFragment(GrapghFragment1.this, 0);
                 fragment.show(manager, "DialogDate");
             }
         });
@@ -107,7 +108,7 @@ public class Graph1 extends Fragment {
             public void onClick(View view) {
                 FragmentManager manager = getFragmentManager();
                 DateFragment fragment = DateFragment.newInstance(new Date());
-                fragment.setTargetFragment(Graph1.this, 1);
+                fragment.setTargetFragment(GrapghFragment1.this, 1);
                 fragment.show(manager, "DialogDate");
             }
         });

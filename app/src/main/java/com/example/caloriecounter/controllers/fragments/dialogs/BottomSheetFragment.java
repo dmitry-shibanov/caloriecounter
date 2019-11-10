@@ -2,24 +2,29 @@ package com.example.caloriecounter.controllers.fragments.dialogs;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.example.caloriecounter.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import java.io.IOException;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import static android.app.Activity.RESULT_OK;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
     public static final int PICK_IMAGE = 1;
+    public static final int PICK_IMAGE_CAMERA = 2;
     public static final String ICON_IMAGE = "IMAGE";
 
     public BottomSheetFragment() {
@@ -42,6 +47,17 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode,intent);
     }
 
+    private void sendResult(int resultCode, Bitmap image){
+        if(getTargetFragment() == null){
+            return;
+        }
+
+        Intent intent = new Intent();
+        intent.putExtra(ICON_IMAGE,image);
+
+        getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode,intent);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -50,9 +66,18 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             case PICK_IMAGE:
                 if(resultCode == RESULT_OK){
                     Uri selectedImage = data.getData();
-                    Log.i("BottomSheetFragment",selectedImage.getPath());
-                    sendResult(Activity.RESULT_OK, selectedImage);
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                        Log.i("BottomSheetFragment",selectedImage.getPath());
+                        sendResult(Activity.RESULT_OK, bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
+                break;
+            case PICK_IMAGE_CAMERA:
+                Bitmap photo =  (Bitmap)data.getExtras().get("data");
+                sendResult(Activity.RESULT_OK, photo);
                 break;
         }
     }
@@ -66,10 +91,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         mPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, PICK_IMAGE_CAMERA);
             }
         });
 

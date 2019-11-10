@@ -16,4 +16,6 @@ public interface DbHelper {
 
     List<Food> getUserFood();
 
+    List<Food> getFood();
+
 }

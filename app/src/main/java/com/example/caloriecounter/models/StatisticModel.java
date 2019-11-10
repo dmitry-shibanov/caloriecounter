@@ -1,13 +1,13 @@
 package com.example.caloriecounter.models;
 
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 
-import java.sql.Date;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
+import java.util.Date;
 
 @Entity(active = true, nameInDb = "Statistic")
 public class StatisticModel {
@@ -15,8 +15,8 @@ public class StatisticModel {
     @Id
     private long id;
 
-//    @Property
-//    private Date date;
+    @Property
+    private Date mDate;
 
     @Property
     private String weight;
@@ -29,17 +29,16 @@ public class StatisticModel {
     @Generated(hash = 1471655908)
     private transient StatisticModelDao myDao;
 
-
-    @Generated(hash = 1191353506)
-    public StatisticModel(long id, String weight) {
-        this.id = id;
-        this.weight = weight;
-    }
-
     @Generated(hash = 797960826)
     public StatisticModel() {
     }
 
+    @Generated(hash = 1264311096)
+    public StatisticModel(long id, Date mDate, String weight) {
+        this.id = id;
+        this.mDate = mDate;
+        this.weight = weight;
+    }
 
     public long getId() {
         return this.id;
@@ -55,6 +54,22 @@ public class StatisticModel {
 
     public void setWeight(String weight) {
         this.weight = weight;
+    }
+
+    public Date getDate() {
+        return mDate;
+    }
+
+    public void setDate(Date date) {
+        mDate = date;
+    }
+
+    public Date getMDate() {
+        return this.mDate;
+    }
+
+    public void setMDate(Date mDate) {
+        this.mDate = mDate;
     }
 
     /**
@@ -100,4 +115,5 @@ public class StatisticModel {
         myDao = daoSession != null ? daoSession.getStatisticModelDao() : null;
     }
 
+    
 }

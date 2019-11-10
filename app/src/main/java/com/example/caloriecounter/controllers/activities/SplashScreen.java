@@ -1,9 +1,5 @@
 package com.example.caloriecounter.controllers.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,19 +8,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.caloriecounter.MainActivity;
 import com.example.caloriecounter.R;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -70,22 +64,15 @@ public class SplashScreen extends AppCompatActivity {
             }
         }).start();
 
-//        appName.setAnimation();
-//        Animation fadeOut = new AlphaAnimation(1, 0);
-//        fadeOut.setInterpolator(new AccelerateInterpolator()); //and this
-//        fadeOut.setStartOffset(1000);
-//        fadeOut.setDuration(1000);
-//
-//        AnimationSet animation = new AnimationSet(false); //change to false
-//        animation.addAnimation(fadeIn);
-//        animation.addAnimation(fadeOut);
-//        this.setAnimation(animation);
-
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.splash_progress_bar);
         progressBar.setVisibility(View.VISIBLE);
         new Handler().postDelayed(() -> {
             progressBar.setVisibility(View.GONE);
             checkPermissions();
+//            DB db = DB.getDB(getApplicationContext());
+////            AppDbHelper dbHelper = new AppDbHelper(new com.example.caloriecounter.data.DatabaseOpenHelper(getApplicationContext(),"calorie",null));
+//            AppDbHelper dbHelper = db.getDbHelper();
+//            List<Food> foodList = dbHelper.getFood();
             Intent intent = new Intent(SplashScreen.this, BottomNavigation.class);
             startActivity(intent);
         }, 6000);

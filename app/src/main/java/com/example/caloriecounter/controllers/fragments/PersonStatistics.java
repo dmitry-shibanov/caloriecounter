@@ -46,7 +46,7 @@ public class PersonStatistics extends Fragment {
         tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
 
         adapter = new TabAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFragment(new Graph1(), "График 1");
+        adapter.addFragment(new GrapghFragment1(), "График 1");
         adapter.addFragment(new Graph2(), "График 2");
 
         viewPager.setAdapter(adapter);

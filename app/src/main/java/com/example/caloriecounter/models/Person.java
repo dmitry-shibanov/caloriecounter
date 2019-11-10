@@ -2,8 +2,6 @@ package com.example.caloriecounter.models;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.JoinProperty;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.ToMany;
@@ -11,10 +9,14 @@ import org.greenrobot.greendao.annotation.ToMany;
 import java.util.Date;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.DaoException;
+
 @Entity(active = true, nameInDb = "Person")
 public class Person {
     @Id
-    private Long id;
+    private long id;
 
     @Property
     private String name;
@@ -23,6 +25,7 @@ public class Person {
     private java.util.Date birthday;
 
     @Property
+    @Nullable
     private String sex;
 
     @Property
@@ -39,9 +42,8 @@ public class Person {
     @Generated(hash = 778611619)
     private transient PersonDao myDao;
 
-
-    @Generated(hash = 1828340398)
-    public Person(Long id, String name, java.util.Date birthday, String sex, String path) {
+    @Generated(hash = 900911232)
+    public Person(long id, String name, java.util.Date birthday, String sex, String path) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
@@ -53,7 +55,6 @@ public class Person {
     @Generated(hash = 1024547259)
     public Person() {
     }
-
 
     public long getId() {
         return this.id;
@@ -99,6 +100,19 @@ public class Person {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public List<Food> getMenu() {
+        return mMenu;
+    }
+
+    public void setMenu(List<Food> menu) {
+        mMenu = menu;
+    }
+
+
+    public void setId(long id) {
+        this.id = id;
     }
 
 
@@ -177,5 +191,6 @@ public class Person {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getPersonDao() : null;
     }
+
 
 }

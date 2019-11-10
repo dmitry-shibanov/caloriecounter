@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet_menu"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="90dp"
     android:background="#ffffff"
     android:orientation="vertical"
     app:behavior_hideable="true"
@@ -14,5 +14,5 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_menu_items"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 </LinearLayout>

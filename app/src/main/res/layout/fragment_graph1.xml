@@ -6,9 +6,19 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".controllers.fragments.Graph1">
+    tools:context=".controllers.fragments.GrapghFragment1">
 
     <!-- TODO: Update blank fragment layout -->
+<!--    <com.github.mikephil.charting.charts.PieChart-->
+<!--        android:id="@+id/piechart"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="500dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.496"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/piechart"
         android:layout_width="250dp"
