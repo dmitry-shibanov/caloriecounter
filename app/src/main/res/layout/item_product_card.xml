@@ -12,13 +12,14 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="fitXY"
-            android:background="@drawable/ic_burn"/>
+            android:background="@drawable/ic_burn"
+            android:contentDescription="@string/content_description_image_product" />
         <TextView
             android:id="@+id/title_card"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:text="Content"/>
+            android:text="@string/item_product_holder"/>
     </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

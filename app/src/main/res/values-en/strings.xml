@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <resources>
+        <string name="app_name">Calories counter</string>
+        <string name="title_activity_bottom_navigation">BottomNavigation</string>
+        <string name="title_home">Home</string>
+        <string name="title_dashboard">Dashboard</string>
+        <string name="title_notifications">Notifications</string>
+        <string name="btn_count">Вычислить</string>
+        <string name="cafe">cafe</string>
+        <string name="user">user</string>
+        <string name="graphs">график</string>
+
+        <!-- TODO: Remove or change this placeholder text -->
+        <string name="hello_blank_fragment">Hello blank fragment</string>
+        <string name="search">Search</string>
+        <string name="enter_growth">Введите рост</string>
+        <string name="content_description_balance">Изображение весов</string>
+        <string name="content_description_image_product">изображение продукта</string>
+        <string name="gallery">Галлерея</string>
+        <string name="camera">Фото</string>
+        <string name="product_description">Описание продукта</string>
+        <string name="nutritional_value">Пищева ценность</string>
+        <string name="pls_check_data">Пожайлуста проверьте введенные данные</string>
+        <string name="error_content">Описание ошибки</string>
+        <string name="image_with_mood">изображение настроения</string>
+        <string name="start_date">От какого числа</string>
+        <string name="end_date">До какого числа</string>
+        <string name="item_product_holder">Описание или заголовок</string>
+        <string name="schedule_for">График за</string>
+        <string name="icon_of_user">иконка пользователя</string>
+        <string name="name">Имя</string>
+        <string name="enter_name">Введите имя</string>
+        <string name="enter_your_aim_weight">Ваша цель</string>
+        <string name="enter_weight">Введите вес</string>
+        <string name="save_btn">Сохранить</string>
+        <string name="text_birthday">Дата рождения</string>
+        <string name="enter_birthday">Установите дату рождения</string>
+        <string name="menu_for_user">Меню</string>
+    </resources>
+</resources>

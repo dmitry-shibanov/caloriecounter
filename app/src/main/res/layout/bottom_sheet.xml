@@ -16,12 +16,12 @@
         android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Галлерея"/>
+        android:text="@string/gallery"/>
 
     <Button
         android:id="@+id/use_photo"
         android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Фото"/>
+        android:text="@string/camera"/>
 </LinearLayout>

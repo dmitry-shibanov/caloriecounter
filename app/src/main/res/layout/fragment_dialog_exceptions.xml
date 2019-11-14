@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:gravity="center_horizontal"
-        android:text="Пожайлуста проверьте введенные данные"/>
+        android:text="@string/pls_check_data"/>
 
     <TextView
         android:gravity="center_horizontal"
@@ -18,6 +18,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Описание ошибки"/>
+        android:text="@string/error_content"/>
 
 </LinearLayout>
