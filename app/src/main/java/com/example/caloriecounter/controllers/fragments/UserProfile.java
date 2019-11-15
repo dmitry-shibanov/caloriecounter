@@ -23,6 +23,7 @@ import com.example.caloriecounter.R;
 import com.example.caloriecounter.controllers.fragments.dialogs.BottomSheetFragment;
 import com.example.caloriecounter.controllers.fragments.dialogs.BottomSheetMenuFragment;
 import com.example.caloriecounter.controllers.fragments.dialogs.DialogError;
+import com.example.caloriecounter.data.DB;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -38,6 +39,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.example.caloriecounter.models.Person;
 
 
 public class UserProfile extends Fragment {
@@ -57,6 +60,9 @@ public class UserProfile extends Fragment {
     private BottomSheetBehavior sheetBehavior;
     private LinearLayout bottom_sheet;
 
+    private DB db;
+    private Person user;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -72,6 +78,7 @@ public class UserProfile extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setHasOptionsMenu(true);
 
         if (getArguments() != null) {
@@ -80,21 +87,30 @@ public class UserProfile extends Fragment {
         }
     }
 
-    private void loadImageFromStorage(String path) {
+    private Bitmap loadImageFromStorage(String path) {
 
+        Bitmap b = null;
         try {
 //            File f = new File(path, "profile.jpg");
             File f = new File(path, "profile.jpg");
-            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            b = BitmapFactory.decodeStream(new FileInputStream(f));
             mIcon.setImageBitmap(b);
         } catch (FileNotFoundException e) {
             DialogError di = DialogError.newInstance("Изображение не было найдено в файловой системе проверьте не удалили ли вы его", "Проверьте файлы");
             di.show(getFragmentManager(), "DialogError");
         }
 
+        return b;
+
     }
 
     private String saveToInternalStorage(Bitmap bitmapImage) {
+        if(user.getPath()!=null){
+            File file = new File(user.getPath());
+            if(file.exists()) {
+                boolean done = file.delete();
+            }
+        }
         ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
@@ -107,6 +123,7 @@ public class UserProfile extends Fragment {
             fos = new FileOutputStream(mypath);
             // Use the compress method on the BitMap object to write image to the OutputStream
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            user.setPath(mypath.getPath());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -119,6 +136,12 @@ public class UserProfile extends Fragment {
         return directory.getAbsolutePath();
     }
 
+    private String parseDate(Date date) {
+        int year = date.getYear() + 1900;
+
+        return date.getDate() + "." + date.getMonth() + "." + year;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode != Activity.RESULT_OK) {
@@ -128,16 +151,16 @@ public class UserProfile extends Fragment {
         Log.i("UserProfile", "resultCode " + resultCode);
         if (requestCode == 0) {
             Date date = (Date) data.getSerializableExtra(DateFragment.EXTRA_DATE);
-            int year = date.getYear() + 1900;
-            mBirthday.setText(String.valueOf(date.getDate()) + "." + date.getMonth() + "." + year);
+            mBirthday.setText(parseDate(date));
         }
         if (requestCode == 1) {
 //            Uri image = Uri.parse(data.getStringExtra(BottomSheetFragment.ICON_IMAGE));
 //            try {
 //                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), image);
-                Bitmap bitmap = (Bitmap) data.getParcelableExtra(BottomSheetFragment.ICON_IMAGE);
+            Bitmap bitmap = (Bitmap) data.getParcelableExtra(BottomSheetFragment.ICON_IMAGE);
+            saveToInternalStorage(bitmap);
 //                mIcon.setImageURI(image);
-                mIcon.setImageBitmap(bitmap);
+            mIcon.setImageBitmap(bitmap);
 //            } catch (IOException exp) {
 //                DialogError di = DialogError.newInstance("Проверьте точно ли вы выбрали изображение", "Проверьте галлерею или камеру");
 //                di.show(getFragmentManager(), "DialogError");
@@ -151,6 +174,9 @@ public class UserProfile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
+
+        db = DB.getDB(getContext());
+        user = db.getDbHelper().getUser();
 
         mIcon = (ImageView) view.findViewById(R.id.imageView);
         mIcon.setOnClickListener(new View.OnClickListener() {
@@ -170,17 +196,39 @@ public class UserProfile extends Fragment {
             fragment.show(manager, "DialogDate");
         });
 
-        final Button mMenu = (Button)view.findViewById(R.id.button2);
+        final Button mMenu = (Button) view.findViewById(R.id.button2);
         mMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BottomSheetMenuFragment menuFragment = new BottomSheetMenuFragment();
-                menuFragment.show(getActivity().getSupportFragmentManager(),menuFragment.getTag());
+                menuFragment.show(getActivity().getSupportFragmentManager(), menuFragment.getTag());
             }
         });
 
+        initialiaze();
+
 
         return view;
+    }
+
+    private void initialiaze() {
+        if (user != null) {
+            if (user.getPath() != null) {
+                mIcon.setImageBitmap(loadImageFromStorage(user.getPath()));
+            }
+
+            if (user.getBirthday() != null) {
+                mBirthday.setText(parseDate(user.getBirthday()));
+            }
+
+            if(user.getName()!=null){
+                mName.setText(user.getName());
+            }
+
+//            if(user.getaimWeight()!=null){
+//                mAimWeight.setText(user.getaimWeight());
+//            }
+        }
     }
 
     public void onButtonPressed(Uri uri) {

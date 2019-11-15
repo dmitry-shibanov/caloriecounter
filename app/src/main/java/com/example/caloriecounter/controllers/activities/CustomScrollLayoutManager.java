@@ -4,6 +4,9 @@ import android.content.Context;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+/**
+ * Класс наследующийся от LinearLayoutManager, переопределяет логику не дает возможность scroll
+ */
 public class CustomScrollLayoutManager extends LinearLayoutManager {
     private boolean isScrollEnabled = true;
 

@@ -17,7 +17,7 @@
         tools:layout="@layout/activity_bottom_navigation" />
     <fragment
         android:id="@+id/food"
-        android:name="com.example.caloriecounter.controllers.fragments.Food"
+        android:name="com.example.caloriecounter.controllers.fragments.FoodListFragment"
         android:label="fragment_products"
         tools:layout="@layout/fragment_products" />
 </navigation>

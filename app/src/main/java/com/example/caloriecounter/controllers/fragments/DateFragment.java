@@ -20,14 +20,39 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * DateFragment это класс для определения логики DialogFragment, вызывая его мы получаем окно с
+ * диалогом для выбора даты.
+ */
 public class DateFragment extends DialogFragment {
 
+    /**
+     * Переменная для хранения даты в bundle
+     */
     private static final String ARG_DATE = "date";
+
+
+    /**
+     * переменная через которую в activityResult получем наше выбранное значение.
+     */
     public static final String EXTRA_DATE = "extra";
 
-    private DatePicker mDatePicker;
 
+    /**
+     * DatePicker переменная DatePicker во view.
+     */
+    private DatePicker mDatePicker;
+    private int resultCode;
+    private Date date;
+
+
+    /**
+     * @param resultCode - результат операции.
+     * @param date - Дата, выбранная пользователем
+     */
     private void sendResult(int resultCode, Date date){
+        this.resultCode = resultCode;
+        this.date = date;
         if(getTargetFragment() == null){
             return;
         }
@@ -38,6 +63,10 @@ public class DateFragment extends DialogFragment {
         getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode,intent);
     }
 
+    /**
+     * @param date - дата, выбранная пользователем.
+     * @return Возвращает view с выбором даты @see DateFragment
+     */
     public static DateFragment newInstance(Date date){
         Bundle args = new Bundle();
         args.putSerializable(ARG_DATE,date);

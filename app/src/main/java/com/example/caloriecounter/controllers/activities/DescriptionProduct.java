@@ -19,28 +19,42 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+/**
+ * Класс activity для описания блюда, которое заведено в бд.
+ */
 public class DescriptionProduct extends AppCompatActivity {
-    private ImageView mImage;
-    private TextView mDescription;
+
     private TableLayout mIngredients;
-    private Toolbar toolbar;
+
+    private Drawable loadDrawable(String name){
+        try {
+            InputStream ims = getAssets().open("food/"+name+".jpg");
+            Drawable d = Drawable.createFromStream(ims, null);
+            return d;
+        }
+        catch(IOException ex) {
+            return null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_description_product);
 
-        int index = getIntent().getIntExtra("index",-1);
+        int id = getIntent().getIntExtra("index",-1);
+
         DB db = DB.getDB(getApplicationContext());
         AppDbHelper dbHelper = db.getDbHelper();
-        List<Food> mFood = dbHelper.getFood();
-        Food food = mFood.get(index);
+        Food food = dbHelper.getFoodId(id);
+
         final TextView mDescription = (TextView)findViewById(R.id.description_product);
         mDescription.setText(food.getContent());
         final TextView mCalories = (TextView)findViewById(R.id.calories_product_description);
         mCalories.setText(food.getCalories());
-        mImage = findViewById(R.id.place_image);
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        ImageView mImage = findViewById(R.id.place_image);
+        mImage.setImageDrawable(loadDrawable(String.valueOf(id)));
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setTitle(food.getTitle());
         setSupportActionBar(toolbar);
 
@@ -53,16 +67,5 @@ public class DescriptionProduct extends AppCompatActivity {
             }
         });
 
-        try {
-            // get input stream
-            InputStream ims = getAssets().open("food/"+food.getId()+".jpg");
-            // load image as Drawable
-            Drawable d = Drawable.createFromStream(ims, null);
-            // set image to ImageView
-            mImage.setImageDrawable(d);
-        }
-        catch(IOException ex) {
-            return;
-        }
     }
 }

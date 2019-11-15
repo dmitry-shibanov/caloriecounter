@@ -3,7 +3,11 @@
 
     <string-array
         name="activity_kind">
-        <item>text_string</item>
+        <item>Спорт</item>
+        <item>Соки</item>
+        <item>Правильное питание</item>
+        <item>Отдых</item>
+        <item>Бег</item>
     </string-array>
 
 </resources>

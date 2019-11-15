@@ -52,7 +52,7 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        phrase = new String[]{"Спорт", "Соки", "Правильное питание", "Отдых", "Бег"};
+        phrase = getResources().getStringArray(R.array.activity_kind);//new String[]{"Спорт", "Соки", "Правильное питание", "Отдых", "Бег"};
 
         final TextView appName = (TextView) findViewById(R.id.splash_app_name);
 
@@ -72,7 +72,7 @@ public class SplashScreen extends AppCompatActivity {
 //            DB db = DB.getDB(getApplicationContext());
 ////            AppDbHelper dbHelper = new AppDbHelper(new com.example.caloriecounter.data.DatabaseOpenHelper(getApplicationContext(),"calorie",null));
 //            AppDbHelper dbHelper = db.getDbHelper();
-//            List<Food> foodList = dbHelper.getFood();
+//            List<FoodListFragment> foodList = dbHelper.getFood();
             Intent intent = new Intent(SplashScreen.this, BottomNavigation.class);
             startActivity(intent);
         }, 6000);

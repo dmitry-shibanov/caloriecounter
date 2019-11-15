@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.caloriecounter.R;
 import com.example.caloriecounter.controllers.fragments.Calculate;
-import com.example.caloriecounter.controllers.fragments.Food;
+import com.example.caloriecounter.controllers.fragments.FoodListFragment;
 import com.example.caloriecounter.controllers.fragments.PersonStatistics;
 import com.example.caloriecounter.controllers.fragments.UserProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -25,7 +25,6 @@ public class BottomNavigation extends AppCompatActivity {
     private TextView mTextMessage;
     private FragmentManager fragmentManager;
 
-    private boolean hide = true;
     private onQueryWritten listener;
     private onClearSearchView mOnClearSearchView;
 
@@ -85,6 +84,11 @@ public class BottomNavigation extends AppCompatActivity {
         return true;
     }
 
+
+    /**
+     * реализация listener для выбора загрузки фрагмента на главный экран по нажатию на элемент
+     * bottomNavigationBar (bottomNavigationItem).
+     */
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -97,7 +101,7 @@ public class BottomNavigation extends AppCompatActivity {
                     replaceFragment(fragment);
                     return true;
                 case R.id.navigation_products:
-                    fragment = new Food();
+                    fragment = new FoodListFragment();
                     replaceFragment(fragment);
                     return true;
                 case R.id.navigation_graphs:
@@ -128,6 +132,9 @@ public class BottomNavigation extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    /**
+     * @param fragment фрагмент, который ищем в stack и вызываем его или добавляем его на страницу и в stack
+     */
     private void replaceFragment(Fragment fragment) {
         String backStateName = fragment.getClass().getName();
 
@@ -148,74 +155,5 @@ public class BottomNavigation extends AppCompatActivity {
 
 }
 
-
-//public class AuthenticatedMainActivity extends Activity implements FragmentManager.OnBackStackChangedListener{
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        .............
-//        FragmentManager fragmentManager = getFragmentManager();
-//        fragmentManager.beginTransaction().add(R.id.frame_container,fragment, "First").addToBackStack(null).commit();
-//    }
-//
-//    private void switchFragment(Fragment fragment){
-//        FragmentManager fragmentManager = getFragmentManager();
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.frame_container, fragment).addToBackStack("Tag").commit();
-//    }
-//
-//    @Override
-//    public void onBackStackChanged() {
-//        FragmentManager fragmentManager = getFragmentManager();
-//
-//        System.out.println("@Class: SummaryUser : onBackStackChanged "
-//                + fragmentManager.getBackStackEntryCount());
-//
-//        int count = fragmentManager.getBackStackEntryCount();
-//
-//        // when a fragment come from another the status will be zero
-//        if(count == 0){
-//
-//            System.out.println("again loading user data");
-//
-//            // reload the page if user saved the profile data
-//
-//            if(!objPublicDelegate.checkNetworkStatus()){
-//
-//                objPublicDelegate.showAlertDialog("Warning"
-//                        , "Please check your internet connection");
-//
-//            }else {
-//
-//                objLoadingDialog.show("Refreshing data...");
-//
-//                mNetworkMaster.runUserSummaryAsync();
-//            }
-//
-//            // IMPORTANT: remove the current fragment from stack to avoid new instance
-//            fragmentManager.removeOnBackStackChangedListener(this);
-//
-//        }// end if
-//    }
-//}
-
-
 //https://stackoverflow.com/questions/18305945/how-to-resume-fragment-from-backstack-if-exists
 
-
-//Step 2: When you call the another fragment add this method:
-//
-//        String backStateName = this.getClass().getName();
-//
-//        FragmentManager fragmentManager = getFragmentManager();
-//        fragmentManager.addOnBackStackChangedListener(this);
-//
-//        Fragment fragmentGraph = new GraphFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("graphTag",  view.getTag().toString());
-//        fragmentGraph.setArguments(bundle);
-//
-//        fragmentManager.beginTransaction()
-//        .replace(R.id.content_frame, fragmentGraph)
-//        .addToBackStack(backStateName)
-//        .commit();

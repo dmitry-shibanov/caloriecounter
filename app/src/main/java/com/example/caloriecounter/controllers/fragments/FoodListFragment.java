@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.example.caloriecounter.R;
 import com.example.caloriecounter.controllers.activities.BottomNavigation;
 import com.example.caloriecounter.controllers.activities.DescriptionProduct;
+import com.example.caloriecounter.data.AppDbHelper;
+import com.example.caloriecounter.data.DB;
+import com.example.caloriecounter.models.Food;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,14 +31,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class Food extends Fragment {
+public class FoodListFragment extends Fragment {
 
-    List<String> real_products = Arrays.asList("Яблоки", "Ягоды", "Говядина", "Бургеры", "Шашлык", "Пицца", "Рыба", "Вино");
-    List<String> products = real_products.subList(0, real_products.size());
+    private List<Food> real_products = null;//Arrays.asList("Яблоки", "Ягоды", "Говядина", "Бургеры", "Шашлык", "Пицца", "Рыба", "Вино");
+    private List<Food> products = null;//real_products.subList(0, real_products.size());
 
-    private Drawable loadDrawable(int index) {
+    private Drawable loadDrawable(long index) {
         try {
-            InputStream ims = getActivity().getAssets().open("food/" + (index + 1) + ".jpg");
+            InputStream ims = getActivity().getAssets().open("food/" + index + ".jpg");
             Drawable d = Drawable.createFromStream(ims, null);
             return d;
         } catch (IOException ex) {
@@ -53,6 +56,11 @@ public class Food extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_products, container, false);
 
+        final DB db = DB.getDB(getContext());
+        final AppDbHelper appDbHelper = db.getDbHelper();
+        real_products = appDbHelper.getFood();
+        products = real_products.subList(0, real_products.size());
+
         RecyclerView listView = (RecyclerView) view.findViewById(R.id.products_list);
         final ProductsAdapter prodcutAdapter = new ProductsAdapter();
         listView.setAdapter(prodcutAdapter);
@@ -60,16 +68,14 @@ public class Food extends Fragment {
 
         ((BottomNavigation) getActivity()).setItemListener(query -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                products = real_products.stream().peek(String::toLowerCase).filter((String item) -> item.contains(query.toLowerCase())).collect(Collectors.toList());
-                products.forEach(item -> Log.i("Products-List", item));
+                products = real_products.stream().filter((Food item) -> item.getTitle().toLowerCase().contains(query.toLowerCase())).collect(Collectors.toList());
                 prodcutAdapter.notifyDataSetChanged();
             } else {
-                List<String> timedProducts = new ArrayList<>();
-                for (String item :
+                List<Food> timedProducts = new ArrayList<>();
+                for (Food item :
                         real_products) {
-                    if (item.toLowerCase().contains(query.toLowerCase())) {
+                    if (item.getTitle().toLowerCase().contains(query.toLowerCase())) {
                         timedProducts.add(item);
-                        Log.i("Products-List", item);
                     }
                 }
 
@@ -115,16 +121,16 @@ public class Food extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), DescriptionProduct.class);
-                    intent.putExtra("index", index);
+                    intent.putExtra("index", products.get(index).getId());
                     startActivity(intent);
                 }
             });
 
             ImageView image = itemView.findViewById(R.id.image_card);
-            image.setImageDrawable(loadDrawable(index));
+            image.setImageDrawable(loadDrawable(products.get(index).getId()));
 
             TextView title = itemView.findViewById(R.id.title_card);
-            title.setText(products.get(index));
+            title.setText(products.get(index).getTitle());
         }
 
 

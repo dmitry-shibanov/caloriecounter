@@ -24,6 +24,9 @@ public class Person {
     @Property
     private java.util.Date birthday;
 
+//    @Property
+//    private String aimWeight;
+
     @Property
     @Nullable
     private String sex;

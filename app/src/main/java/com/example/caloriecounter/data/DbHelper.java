@@ -18,4 +18,6 @@ public interface DbHelper {
 
     List<Food> getFood();
 
+    Food getFoodId(long id);
+
 }

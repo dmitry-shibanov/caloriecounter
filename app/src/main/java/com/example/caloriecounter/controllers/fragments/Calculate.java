@@ -26,6 +26,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+/**
+ * Класс для подсчета индекса по росту и весу.
+ */
 public class Calculate extends Fragment {
     private TextView result;
     private static final String CHANNEL_ID = "dasjdlasl";
@@ -97,14 +100,11 @@ public class Calculate extends Fragment {
                     bundle.putDouble("message",result.doubleValue());
                     dialogResult.setArguments(bundle);
                     dialogResult.show(getFragmentManager(),"DialogResult");
-                }catch(ClassCastException exp){
+                }catch(ClassCastException | NumberFormatException exp){
                     DialogError di = DialogError.newInstance("Проверьте правильность введенных данных, везде ли введены числа","Проверьте данные");
                     di.show(getFragmentManager(),"DialogError");
                 }catch (ArithmeticException exp){
                     DialogError di = DialogError.newInstance("Проверьте правильность введенных данных, значения меньше или равна 0 недопустимы","Проверьте данные");
-                    di.show(getFragmentManager(),"DialogError");
-                }catch(NumberFormatException exp){
-                    DialogError di = DialogError.newInstance("Проверьте правильность введенных данных, везде ли введены числа","Проверьте данные");
                     di.show(getFragmentManager(),"DialogError");
                 }
             }

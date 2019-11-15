@@ -41,6 +41,7 @@ public class AppDbHelper implements DbHelper{
 
     @Override
     public Person getUser() {
+//        Person user = mDaoSession.getPersonDao().loadAll().get(0);
         return null;
     }
 
@@ -59,4 +60,12 @@ public class AppDbHelper implements DbHelper{
         List<Food> foodList = mDaoSession.getFoodDao().loadAll();
         return foodList;
     }
+
+    @Override
+    public Food getFoodId(long id) {
+        Food food = mDaoSession.getFoodDao().load(id);
+        return food;
+    }
+
+
 }

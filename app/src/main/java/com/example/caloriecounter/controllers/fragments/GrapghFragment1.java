@@ -133,7 +133,7 @@ public class GrapghFragment1 extends Fragment {
         yValues.add(new PieEntry(14f, "Мясо"));
         yValues.add(new PieEntry(12f, "KFC"));
 
-        PieDataSet dataSet = new PieDataSet(yValues, "Food");
+        PieDataSet dataSet = new PieDataSet(yValues, "FoodListFragment");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
         dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
