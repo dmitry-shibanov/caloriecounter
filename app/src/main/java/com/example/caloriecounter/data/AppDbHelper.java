@@ -11,7 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class AppDbHelper implements DbHelper{
+public class AppDbHelper implements DbHelper {
 
     private final DaoSession mDaoSession;
 
@@ -26,6 +26,21 @@ public class AppDbHelper implements DbHelper{
 
     @Override
     public Long addFoodToUser(Food food) {
+        Person user = mDaoSession.getPersonDao().load(1L);
+        List<Food> menu = user.getMenu();
+        int index = menu.indexOf(food);
+
+        if (index >= 0) {
+            return -1L;
+        }
+
+        menu.add(food);
+
+        return 1L;
+    }
+
+    @Override
+    public Long addFoodToUser(Long id) {
         return null;
     }
 

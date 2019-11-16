@@ -1,6 +1,7 @@
 package com.example.caloriecounter.controllers.fragments;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.caloriecounter.R;
+import com.example.caloriecounter.controllers.SwipeController;
+import com.example.caloriecounter.controllers.SwipeControllerActions;
 import com.example.caloriecounter.controllers.activities.BottomNavigation;
 import com.example.caloriecounter.controllers.activities.DescriptionProduct;
 import com.example.caloriecounter.data.AppDbHelper;
@@ -28,9 +31,10 @@ import java.util.stream.Collectors;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import static androidx.recyclerview.widget.ItemTouchHelper.*;
 public class FoodListFragment extends Fragment {
 
     private List<Food> real_products = null;//Arrays.asList("Яблоки", "Ягоды", "Говядина", "Бургеры", "Шашлык", "Пицца", "Рыба", "Вино");
@@ -60,11 +64,27 @@ public class FoodListFragment extends Fragment {
         final AppDbHelper appDbHelper = db.getDbHelper();
         real_products = appDbHelper.getFood();
         products = real_products.subList(0, real_products.size());
-
-        RecyclerView listView = (RecyclerView) view.findViewById(R.id.products_list);
         final ProductsAdapter prodcutAdapter = new ProductsAdapter();
+        RecyclerView listView = (RecyclerView) view.findViewById(R.id.products_list);
         listView.setAdapter(prodcutAdapter);
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
+        SwipeController swipeController = new SwipeController(new SwipeControllerActions() {
+            @Override
+            public void onLeftClicked(int position) {
+                Food food = products.get(position);
+            }
+
+        },RIGHT);
+
+        listView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
+        itemTouchhelper.attachToRecyclerView(listView);
+
 
         ((BottomNavigation) getActivity()).setItemListener(query -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

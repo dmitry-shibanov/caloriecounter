@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface DbHelper {
     Long addFoodToUser(Food food);
+    Long addFoodToUser(Long id);
     Long removeFoodUser(Food food);
     Long removeFoodUser(Long id);
 

@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 
-@Entity(active = true, nameInDb = "FoodListFragment")
+@Entity(active = true, nameInDb = "Food")
 public class Food {
 
     @Id

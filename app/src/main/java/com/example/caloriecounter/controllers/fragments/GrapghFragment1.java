@@ -26,7 +26,7 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
+// https://stackoverflow.com/questions/15313598/once-for-all-how-to-correctly-save-instance-state-of-fragments-in-back-stack
 public class GrapghFragment1 extends Fragment {
 
     private PieChart pieChart;
@@ -37,6 +37,26 @@ public class GrapghFragment1 extends Fragment {
 
     public GrapghFragment1() {
 
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            //Restore the fragment's state here
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        long date1 = dateFirst.getTime();
+        long date2 = dateSecond.getTime();
+
+        outState.putLong("date1",date1);
+        outState.putLong("date2",date2);
+        //Save the fragment's state here
     }
 
     private void checkCondionDates(){

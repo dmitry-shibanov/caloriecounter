@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
+// https://medium.com/mindorks/learn-unit-testing-in-android-by-building-a-sample-application-23ec2f6340e8
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
     @Test

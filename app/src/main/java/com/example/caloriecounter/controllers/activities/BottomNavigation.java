@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.example.caloriecounter.R;
 import com.example.caloriecounter.controllers.fragments.Calculate;
 import com.example.caloriecounter.controllers.fragments.FoodListFragment;
+import com.example.caloriecounter.controllers.fragments.GrapghFragment1;
+import com.example.caloriecounter.controllers.fragments.Graph2;
 import com.example.caloriecounter.controllers.fragments.PersonStatistics;
 import com.example.caloriecounter.controllers.fragments.UserProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -20,10 +22,12 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
+// https://stackoverflow.com/questions/35497285/how-to-restore-fragment-back-stack-with-in-an-activity-after-application-is-kil
 public class BottomNavigation extends AppCompatActivity {
     private TextView mTextMessage;
     private FragmentManager fragmentManager;
+    private static final String TAG1 = "TAG1";
+    private static final String TAG2 = "TAG2";
 
     private onQueryWritten listener;
     private onClearSearchView mOnClearSearchView;
@@ -42,6 +46,21 @@ public class BottomNavigation extends AppCompatActivity {
 
     public void ClearSearchView(onClearSearchView listener) {
         this.mOnClearSearchView = listener;
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment f = manager.findFragmentById(R.id.frame_content);
+        String name = f.getClass().getName();
+        if(name.contains("PersonStatistics")){
+//            Fragment f1 = manager.findFragmentByTag();
+//            Fragment f2 = manager.findFragmentByTag();
+//            manager.beginTransaction().remove(f1)
+//            manager.beginTransaction().remove(f2);
+        }
     }
 
     @Override
@@ -105,7 +124,10 @@ public class BottomNavigation extends AppCompatActivity {
                     replaceFragment(fragment);
                     return true;
                 case R.id.navigation_graphs:
-                    fragment = new PersonStatistics();
+                    Fragment fragment1 = new GrapghFragment1();
+                    Fragment fragment2 = new Graph2();
+
+                    fragment = PersonStatistics.newInstance(fragment1, fragment2);
                     replaceFragment(fragment);
                     return true;
                 case R.id.navigation_user:
@@ -116,6 +138,9 @@ public class BottomNavigation extends AppCompatActivity {
             return false;
         }
     };
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,13 +168,19 @@ public class BottomNavigation extends AppCompatActivity {
         boolean fragmentPopped = manager.findFragmentByTag(backStateName) == null ? false : true;
         if (!fragmentPopped) { //fragment not in back stack, create it.
             FragmentTransaction ft = manager.beginTransaction();
-            ft.replace(R.id.frame_content, fragment);
+            ft.replace(R.id.frame_content, fragment,backStateName);
             ft.addToBackStack(backStateName);
             ft.commit();
         } else {
             FragmentTransaction ft = manager.beginTransaction();
             boolean check = manager.findFragmentByTag(backStateName) == null ? false : true;
-            ft.show(manager.findFragmentByTag(backStateName)).commit();
+//            manager.beginTransaction().remove(fragment);
+//            ft.show(manager.findFragmentByTag(backStateName)).commit();
+
+
+            ft.replace(R.id.frame_content, fragment);
+            ft.addToBackStack(backStateName);
+            ft.commit();
         }
     }
 

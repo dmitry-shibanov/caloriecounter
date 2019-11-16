@@ -29,6 +29,7 @@
         <activity
             android:name=".controllers.activities.BottomNavigation"
             android:label="@string/app_name"
+            android:alwaysRetainTaskState="true"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity

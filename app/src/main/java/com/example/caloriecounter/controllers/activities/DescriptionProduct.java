@@ -42,7 +42,7 @@ public class DescriptionProduct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_description_product);
 
-        int id = getIntent().getIntExtra("index",-1);
+        long id = getIntent().getLongExtra("index",-1);
 
         DB db = DB.getDB(getApplicationContext());
         AppDbHelper dbHelper = db.getDbHelper();
