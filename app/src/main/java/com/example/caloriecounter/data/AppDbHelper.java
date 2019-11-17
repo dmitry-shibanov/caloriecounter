@@ -5,7 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.caloriecounter.models.DaoMaster;
 import com.example.caloriecounter.models.DaoSession;
 import com.example.caloriecounter.models.Food;
+import com.example.caloriecounter.models.FoodDao;
 import com.example.caloriecounter.models.Person;
+
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.List;
 
@@ -56,8 +59,18 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Person getUser() {
-//        Person user = mDaoSession.getPersonDao().loadAll().get(0);
-        return null;
+        Person user = mDaoSession.getPersonDao().loadAll().get(0);
+        return user;
+    }
+
+    public List<Food> mMenu(){
+        QueryBuilder<Food> cityQueryBuilder = mDaoSession.getFoodDao().queryBuilder().where(FoodDao
+                .Properties.Id_food_user.eq(1));
+        cityQueryBuilder.build();
+
+        List<Food> cityList=cityQueryBuilder.list();
+
+        return cityList;
     }
 
     @Override

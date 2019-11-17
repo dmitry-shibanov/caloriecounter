@@ -24,6 +24,7 @@ import com.example.caloriecounter.controllers.fragments.dialogs.BottomSheetFragm
 import com.example.caloriecounter.controllers.fragments.dialogs.BottomSheetMenuFragment;
 import com.example.caloriecounter.controllers.fragments.dialogs.DialogError;
 import com.example.caloriecounter.data.DB;
+import com.example.caloriecounter.models.Person;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -39,8 +40,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
-import com.example.caloriecounter.models.Person;
 
 
 public class UserProfile extends Fragment {
@@ -188,6 +187,8 @@ public class UserProfile extends Fragment {
             }
         });
 
+        user.setName("Пользователь 1");
+
         mBirthday = (TextView) view.findViewById(R.id.textView4);
         mBirthday.setOnClickListener(view1 -> {
             FragmentManager manager = getFragmentManager();
@@ -205,6 +206,16 @@ public class UserProfile extends Fragment {
             }
         });
 
+        mName = (TextInputEditText)view.findViewById(R.id.textInputEditText);
+        mAimWeight = (TextInputEditText)view.findViewById(R.id.aim_edit);
+        mSave = (Button)view.findViewById(R.id.button);
+        mSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         initialiaze();
 
 
@@ -218,7 +229,7 @@ public class UserProfile extends Fragment {
             }
 
             if (user.getBirthday() != null) {
-                mBirthday.setText(parseDate(user.getBirthday()));
+//                mBirthday.setText(parseDate(user.getBirthday()));
             }
 
             if(user.getName()!=null){

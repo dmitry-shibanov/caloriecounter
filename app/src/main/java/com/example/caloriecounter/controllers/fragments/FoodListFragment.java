@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +19,11 @@ import com.example.caloriecounter.controllers.activities.DescriptionProduct;
 import com.example.caloriecounter.data.AppDbHelper;
 import com.example.caloriecounter.data.DB;
 import com.example.caloriecounter.models.Food;
+import com.example.caloriecounter.models.Person;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +33,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import static androidx.recyclerview.widget.ItemTouchHelper.*;
+
+import static androidx.recyclerview.widget.ItemTouchHelper.RIGHT;
 public class FoodListFragment extends Fragment {
 
     private List<Food> real_products = null;//Arrays.asList("Яблоки", "Ягоды", "Говядина", "Бургеры", "Шашлык", "Пицца", "Рыба", "Вино");
@@ -72,6 +72,17 @@ public class FoodListFragment extends Fragment {
             @Override
             public void onLeftClicked(int position) {
                 Food food = products.get(position);
+                Person user = appDbHelper.getUser();
+
+                user.getMMenu().add(food);
+
+                food.setId_food_user(user.getId());
+
+                List<Food> mMenu = user.getMMenu();
+                List<Food> myFood = appDbHelper.mMenu();
+                List<Food> fal = appDbHelper.getFood();
+
+                System.out.println("ksal");
             }
 
         },RIGHT);

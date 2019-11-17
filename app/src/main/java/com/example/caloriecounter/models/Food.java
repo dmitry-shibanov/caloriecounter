@@ -4,8 +4,6 @@ package com.example.caloriecounter.models;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
-
-import androidx.annotation.Nullable;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 
@@ -24,9 +22,8 @@ public class Food {
     @Property
     private String calories;
 
-    @Property(nameInDb = "id_food_user")
-    @Nullable
-    private Long id_food_user;
+    @Property
+    private long id_food_user;
 
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
@@ -35,6 +32,7 @@ public class Food {
     /** Used for active entity operations. */
     @Generated(hash = 1296197325)
     private transient FoodDao myDao;
+
 
     @Generated(hash = 504340335)
     public Food(long id, String title, String content, String calories,
@@ -48,6 +46,7 @@ public class Food {
     @Generated(hash = 866324199)
     public Food() {
     }
+
 
     public long getId() {
         return this.id;
@@ -72,6 +71,7 @@ public class Food {
     }
     public void setCalories(String calories) {
         this.calories = calories;
+        daoSession.getFoodDao().update(this);
     }
     public Long getId_food_user() {
         return this.id_food_user;

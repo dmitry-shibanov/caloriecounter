@@ -4,8 +4,6 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.ToOne;
-
-import java.util.Date;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.NotNull;
@@ -25,7 +23,7 @@ public class FoodDate {
     private int count;
 
     @Property
-    private Date mDate;
+    private int mDate;
 
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
@@ -35,9 +33,8 @@ public class FoodDate {
     @Generated(hash = 699920553)
     private transient FoodDateDao myDao;
 
-
-    @Generated(hash = 587499427)
-    public FoodDate(Long id, long foodId, int count, Date mDate) {
+    @Generated(hash = 1004847165)
+    public FoodDate(Long id, long foodId, int count, int mDate) {
         this.id = id;
         this.foodId = foodId;
         this.count = count;
@@ -50,7 +47,6 @@ public class FoodDate {
 
     @Generated(hash = 1118738352)
     private transient Long food__resolvedKey;
-
 
     public Long getId() {
         return id;
@@ -76,11 +72,11 @@ public class FoodDate {
         this.count = count;
     }
 
-    public Date getMDate() {
+    public int getMDate() {
         return this.mDate;
     }
 
-    public void setMDate(Date mDate) {
+    public void setMDate(int mDate) {
         this.mDate = mDate;
     }
 
@@ -159,5 +155,6 @@ public class FoodDate {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getFoodDateDao() : null;
     }
+
 
 }

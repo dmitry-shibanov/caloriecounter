@@ -1,5 +1,6 @@
 package com.example.caloriecounter.controllers.fragments;
 
+import android.Manifest;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
@@ -59,7 +60,7 @@ public class Calculate extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calculate_calorie,container,false);
         setHasOptionsMenu(true);
-
+        requestPermissions(new String[]{ Manifest.permission.WRITE_EXTERNAL_STORAGE}, 123);
         final ImageView mIcon = (ImageView)view.findViewById(R.id.balance);
         mIcon.setImageDrawable(loadDrawable());
 

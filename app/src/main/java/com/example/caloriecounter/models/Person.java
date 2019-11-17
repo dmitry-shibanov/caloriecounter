@@ -1,17 +1,15 @@
 package com.example.caloriecounter.models;
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.JoinProperty;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.ToMany;
 
-import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.Nullable;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
 
 @Entity(active = true, nameInDb = "Person")
 public class Person {
@@ -22,7 +20,7 @@ public class Person {
     private String name;
 
     @Property
-    private java.util.Date birthday;
+    private String birthday;
 
 //    @Property
 //    private String aimWeight;
@@ -34,7 +32,7 @@ public class Person {
     @Property
     private String path;
 
-    @ToMany(joinProperties = {@JoinProperty(name = "id",referencedName = "id_food_user")})
+    @ToMany(referencedJoinProperty = "id_food_user")
     private List<Food> mMenu;
 
     /** Used to resolve relations */
@@ -45,8 +43,9 @@ public class Person {
     @Generated(hash = 778611619)
     private transient PersonDao myDao;
 
-    @Generated(hash = 900911232)
-    public Person(long id, String name, java.util.Date birthday, String sex, String path) {
+
+    @Generated(hash = 570070997)
+    public Person(long id, String name, String birthday, String sex, String path) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
@@ -59,6 +58,7 @@ public class Person {
     public Person() {
     }
 
+
     public long getId() {
         return this.id;
     }
@@ -68,7 +68,7 @@ public class Person {
         return name;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
@@ -81,7 +81,7 @@ public class Person {
     }
 
 
-    public void setBirthday(java.util.Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -194,6 +194,5 @@ public class Person {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getPersonDao() : null;
     }
-
 
 }
