@@ -34,9 +34,8 @@ public class Food {
     private transient FoodDao myDao;
 
 
-    @Generated(hash = 504340335)
-    public Food(long id, String title, String content, String calories,
-            Long id_food_user) {
+    @Generated(hash = 1702077615)
+    public Food(long id, String title, String content, String calories, long id_food_user) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -111,6 +110,9 @@ public class Food {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+    public void setId_food_user(long id_food_user) {
+        this.id_food_user = id_food_user;
     }
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 505459956)
