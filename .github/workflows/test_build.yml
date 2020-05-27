@@ -26,5 +26,6 @@ jobs:
         java-version: ${{ matrix.java }}
       
     - name: Build with Gradle
+      working-directory: caloriecounter
       run: ./gradlew build --stacktrace --scan
         
